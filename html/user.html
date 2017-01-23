@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <title>Phota User</title>
+    <meta charset="utf-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/fonts/font1/flaticon.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/user.css">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="../js/polyfills.js"></script>
+    <script type="text/javascript" src="../js/jquery.columnizer.js"></script>
+    <script type="text/javascript" src="../js/_lib/lodash.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/user.js"></script>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="wrapper">
+            <div class="logo-container">
+                <a href="./index.html" class="top-logo">
+                    <img src="../img/ico/svg/white-logo.svg" width="152" height=61">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Про нас</a>
+
+                        <div class="sub-menu-triangle"></div>
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item"><a href="./index.html#about">Хто ми?</a></li>
+                            <li class="sub-menu-item"><a href="./index.html#purposes">Наші цілі</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Фото</a>
+                        <div class="sub-menu-triangle"></div>
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item"><a href="./user.html">Усі фото</a></li>
+                            <li class="sub-menu-item"><a href="#" class="my-fotos">Мої фото</a></li>
+                            <li class="sub-menu-item"><a href="#" class="popular">Найпопулярніше</a></li>
+                            <li class="sub-menu-item"><a href="./upload.html">Завантажити нове</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="./contacts.html">Контакти</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="site-search">
+                <span class="search-icon flaticon-search"></span>
+                <form id="search-form" method="GET">
+                    <input class="search" placeholder="Пошук">
+                </form>
+            </div>
+
+            <div class="login-container">
+                <div class="user-control"><a href="./upload.html"><span class="flaticon-cloud-computing user-links"></span></a></div>
+                <div class="user-control"><span class="user-login login-info"></span><span class="flaticon-logout user-links"></span> </div>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="message-wrapper"></div>
+
+    <div class="sort-wrapper">
+        <div class="wrapper">
+            <div class="sort-description">
+                <div class="sorting">
+                    <span class="sort-name">Сортування: </span>
+                    <ul class="sorting-list">
+                        <li class="sort-type date-type">за датою</li>
+                        <li class="sort-type likes-type">за популярністю</li>
+                    </ul>
+                </div>
+                <div class="triangles">
+                    <div class="asc-triangle"></div>
+                    <div class="desc-triangle"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="content">
+    </div>
+
+    <div class="modal">
+        <div class="close">
+            <img src="../img/ico/png/cancel.png">
+        </div>
+
+        <img class="modal-content">
+
+        <div class="photo-info">
+            <p class="author"></p>
+
+            <div class="likes">
+                <button class="like-photo"><span></span></button>
+            </div>
+
+            <div class="tags">
+            </div>
+
+            <div class="description">
+                <p class="heading"></p>
+                <p class="description">
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <ul class="pages-container">
+            <!--
+            <li class="page-item"><a class="nav-link prev-link" href="#">&lt;</a></li>
+            <li class="page-item page-number">
+                <a href="#" class="page-link active">1</a>
+            </li>
+            <li class="page-item page-number">
+                <a href="#" class="page-link">2</a>
+            </li>
+            <li class="page-item page-number">
+                <a href="#" class="page-link">3</a>
+            </li>
+            <li class="page-item"><a class="nav-link next-link" href="#">&gt;</a></li>-->
+        </ul>
+    </div>
+
+    <footer class="main-footer">
+        <div class="wrapper">
+            <span class="copyright">&copy;2017 RoyalDesign</span>
+            <div class="message-buttons">
+                <span class="flaticon-interface"></span>
+                <a href="./contacts.html#map-container"><span class="flaticon-placeholder"></span></a>
+            </div>
+            <div class="social-buttons">
+                <span class="flaticon-facebook-1"></span>
+                <span class="flaticon-twitter-1"></span>
+                <span class="flaticon-blogger"></span>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/template" id="user-photos">
+        <%photos.forEach(function(p){%>
+            <div class="image">
+                <div class="img-container photo-container">
+                    <img src=<%=p.src%> class="thumbnail-photo">
+                </div>
+                <div class="additional author-info">
+                    <span><%=p.author%></span>
+                </div>
+                <div class="additional likes-date-info">
+                    <div class="photo-likes">
+                        <div class="heart"></div>
+                        <span class="likes"><%=p.likes%></span>
+                    </div>
+                    <div class="created-date">
+                        <span><%= p.dateStr %></span>
+                    </div>
+                </div>
+            </div>
+            <%});%>
+    </script>
+
+    <script type="text/template" id="found-photos">
+        <%photos.forEach(function(p){%>
+            <div class="found-image">
+                <div class="found-img-container photo-container">
+                    <img src=<%=p.src%> class="found-photo">
+                </div>
+                <div class="general-photo-info">
+                    <div class="found-title">
+                        <p>
+                            <%=p.title%>
+                        </p>
+                    </div>
+                    <div class="found-description">
+                        <p>
+                            <%=p.description%>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <%});%>
+    </script>
+
+    <script type="text/template" id="not-found">
+        <div class="not-found-message">
+            <%if(isSearch) {%>
+                <span>Нічого не знайдено...</span>
+            <%} else {%>
+                <span>Ваша галерея пуста, але ви можете <a href="./upload.html">завантажити фото</a></span>
+            <%}%>
+        </div>
+    </script>
+</body>
+
+</html>

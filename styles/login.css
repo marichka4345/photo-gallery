@@ -1,0 +1,84 @@
+body {
+    background: url("../img/pic/large.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.rg-page {
+    margin: 2% auto;
+    max-width: 500px;
+}
+
+.rg-wrapper {
+    width: 100%;
+    background: #000;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.rg-form {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 80%;
+    height: 100%;
+    padding: 4% 0;
+    color: #fff;
+}
+
+.rg-heading {
+    font-size: 2rem;
+}
+
+.rg-input {
+    display: block;
+    font-size: 18px;
+    letter-spacing: .1em;
+    color: #fff;
+    width: 100%;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, .7);
+    margin: 10% 0;
+    padding: 4%;
+    text-align: center;
+}
+
+.rg-input:focus {
+    border-bottom: 2px solid #96281B;
+    outline: none;
+}
+
+.rg-submit {
+    padding: 3% 6%;
+    font-size: 17px;
+    border: 0;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.rg-submit:hover {
+    opacity: .7;
+}
+
+.rg-submit:focus {
+    outline: none;
+}
+
+.login-info {
+    color: #D2D7D3;
+    margin-top: 10%;
+}
+
+.rg-btn {
+    color: rgba(171, 183, 183, .6);
+}
+
+.error {
+    margin-top: 4%;
+    padding: 2%;
+    border-radius: 10px;
+    background: #F64747;
+    border: 1px solid #CF000F;
+}

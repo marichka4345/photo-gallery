@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/login.css">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="../js/polyfills.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        $(document).ready(function() {
+
+
+            $('#rg-form').submit(
+                validateForm
+            );
+        });
+
+        function validateForm(event) {
+            var login = $('#rg-login').val(),
+                pass = $('#rg-passwd').val();
+            var errorMsg = $('<div class="error"></div>'),
+                firstInput = $('.rg-input').eq(0);
+
+            $('.error').remove();
+
+            function formErrorMsg(str) {
+                errorMsg.append(str);
+                firstInput.before(errorMsg);
+                event.preventDefault();
+                return false;
+            }
+
+            api.loginUser({
+                login: login,
+                password: pass
+            }, alert, formErrorMsg);
+            console.log(localStorage.userToken);
+            return true;
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="rg-page">
+        <div class="rg-wrapper">
+
+            <form class="rg-form" id="rg-form" method="GET" action="./user.html">
+                <a href="./index.html" class="top-logo"><img src="../img/ico/svg/white-logo.svg" width="100" height="100"></a>
+                <p class="rg-heading">Вхід</p>
+                <input type="text" class="rg-input" id="rg-login" placeholder="Логін">
+
+                <input type="password" class="rg-input" id="rg-passwd" placeholder="Пароль">
+                <input type="submit" class="rg-submit" value="Увійти">
+
+                <div class="login-info">
+                    <p>Ще не маєте облікового запису?</p>
+                    <a href="./registration.html" class="rg-btn">Зареєструватися</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

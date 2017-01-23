@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <title>Phota</title>
+    <meta charset="utf-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/fonts/font1/flaticon.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/index.css">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/slider.js"></script>
+    <script src="../js/api.js"></script>
+    <style>
+        .logo-container {
+            margin-right: 10%;
+        }
+        
+        .main-nav {
+            width: 50%;
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="wrapper">
+            <div class="logo-container">
+                <a href="./index.html" class="top-logo">
+                    <img src="../img/ico/svg/white-logo.svg" width="152" height="61">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <a href="#">Про нас</a>
+
+                        <div class="sub-menu-triangle"></div>
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item"><a href="./index.html#about">Хто ми?</a></li>
+                            <li class="sub-menu-item"><a href="./index.html#purposes">Наші цілі</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#">Фото</a>
+                        <div class="sub-menu-triangle"></div>
+                        <ul class="sub-menu">
+                            <li class="sub-menu-item"><a href="./registration.html">Найпопулярніше</a></li>
+                            <li class="sub-menu-item"><a href="./registration.html">Завантажити нове</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="./contacts.html">Контакти</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="login-container">
+                <a href="./registration.html"><button class="inline-btn login-btn">Реєстрація</button></a>
+                <a href="./login.html"><button class="inline-btn login-btn">Вхід</button></a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="slider">
+        <div class="slider-control prev">
+            <div class="control-wrapper">
+                &lt;
+            </div>
+        </div>
+        <div class="slider-control next">
+            <div class="control-wrapper">
+                &gt;
+            </div>
+        </div>
+        <div class="slider-item active"><img src="../img/pic/slider1.jpg"></div>
+        <div class="slider-item"><img src="../img/pic/slider2.jpg"></div>
+        <div class="slider-item"><img src="../img/pic/slider3.jpg"></div>
+        <div class="slider-item"><img src="../img/pic/slider4.jpg"></div>
+        <div class="slider-item"><img src="../img/pic/slider5.jpg"></div>
+        <div class="slider-item"><img src="../img/pic/slider6.jpg"></div>
+        <a href="#about"><img class="scroll-btn" src="../img/ico/png/arrow-down.png"></a>
+    </div>
+
+    <div id="about" class="info about">
+        <div class="inner-wrapper">
+            <p class="heading">Хто ми?</p>
+            <p>Світ сповнений краси, незвичайної, незбагненної, від якої перехоплює подих. На щастя, людина може зберегти цю красу, навіть якщо вона триває мить, за допомогою фотографії. Phota створений для тих, хто вміє помічати цю красу, ділитися нею з
+                іншими, дарувати емоції своїми фото, а також для тих, хто любить споглядати прекрасне.
+            </p>
+        </div>
+    </div>
+    <div id="purposes">
+        <section class="purposes">
+            <article class="purpose">
+                <img src="../img/pic/photographer.jpg">
+                <h1>Твори</h1>
+                <div class="section-description">
+                    <p>
+                        Ділися своїми фотографіями. Можливо, це справжній витвір мистецтва, який ти повинен показати світу.
+                    </p>
+                </div>
+            </article>
+            <article class="purpose">
+                <img src="../img/pic/inspiration.jpg">
+                <h1>Надихайся</h1>
+                <div class="section-description">
+                    <p>
+                        Знайди своїх однодумців! Черпай натхнення з фото інших учасників Phota.
+                    </p>
+                </div>
+            </article>
+            <article class="purpose">
+                <img src="../img/pic/joy.jpg">
+                <h1>Живи</h1>
+                <div class="section-description">
+                    <p>
+                        Отримуй задоволення від того, що займаєшся улюбленою справою. Багато хто про таке мріє.
+                    </p>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <hr class="zigzag">
+
+    <footer class="main-footer">
+        <div class="wrapper">
+            <span class="copyright">&copy;2017 RoyalDesign</span>
+            <div class="message-buttons">
+                <a href="mailto:marichka4345@gmail.com"><span class="flaticon-interface"></span></a>
+                <a href="./contacts.html#map-container"><span class="flaticon-placeholder"></span></a>
+            </div>
+            <div class="social-buttons">
+                <span class="flaticon-facebook-1"></span>
+                <span class="flaticon-twitter-1"></span>
+                <span class="flaticon-blogger"></span>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
