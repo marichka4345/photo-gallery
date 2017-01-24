@@ -24,7 +24,11 @@
          if ($(this).scrollTop() > 200) {
              header.addClass('menu-scrolled');
              $('.menu').addClass('menu-scrolled');
-             $('.top-logo img').attr('src', '../img/ico/svg/black-logo.svg');
+             var logoPath = '../img/ico/svg/black-logo.svg',
+                 fallbackPath = '../img/ico/png/black-logo.png';
+             var topLogoSrc = $('.top-logo img').attr('src');
+             if (topLogoSrc.slice(-3) === 'svg') $('.top-logo img').attr('src', logoPath);
+             else topLogoSrc = fallbackPath;
              $('.login-container').css('color', '#000');
              $('.user-links').addClass('user-link-scrolled');
              $('.login-btn').addClass('login-btn-scrolled');
@@ -34,7 +38,11 @@
          } else {
              header.removeClass('menu-scrolled');
              $('.menu').removeClass('menu-scrolled');
-             $('.top-logo img').attr('src', '../img/ico/svg/white-logo.svg');
+             var logoPath = '../img/ico/svg/white-logo.svg',
+                 fallbackPath = '../img/ico/png/white-logo.png';
+             var topLogoSrc = $('.top-logo img').attr('src');
+             if (topLogoSrc.slice(-3) === 'svg') $('.top-logo img').attr('src', logoPath);
+             else topLogoSrc = fallbackPath;
              $('.login-container').css('color', '#fff');
              $('.user-links').removeClass('user-link-scrolled');
              $('.login-btn').removeClass('login-btn-scrolled');

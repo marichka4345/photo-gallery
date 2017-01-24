@@ -1,0 +1,42 @@
+.top-logo img {
+    width: 135px;
+}
+
+.menu-item:after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-radius: 2px;
+    background: transparent;
+}
+
+div.contact {
+    margin: 10px auto;
+}
+
+.contact .ico {
+    width: 32px;
+    height: 32px;
+}
+
+.photo-likes .heart {
+    width: 26px;
+    height: 26px;
+    background: url(../img/ico/png/like2.png) no-repeat;
+}
+
+.like-photo:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../img/ico/png/like2.png') no-repeat;
+    width: 26px;
+    height: 26px;
+}
+
+.ie8-button {
+    margin-top: 2em;
+}

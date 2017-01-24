@@ -5,19 +5,19 @@
     <title>Phota User</title>
     <meta charset="utf-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/fonts/font1/flaticon.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/user.css">
 
     <!--[if lt IE 9]>
+    <link rel="stylesheet" href="../styles/ie8-styles.css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="../js/polyfills.js"></script>
     <script type="text/javascript" src="../js/jquery.columnizer.js"></script>
-    <script type="text/javascript" src="../js/_lib/lodash.js"></script>
+    <script type="text/javascript" src="../js/_lib/lodash-old.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/api.js"></script>
     <script src="../js/user.js"></script>
@@ -61,7 +61,7 @@
             <div class="site-search">
                 <span class="search-icon flaticon-search"></span>
                 <form id="search-form" method="GET">
-                    <input class="search" placeholder="Пошук">
+                    <input class="search" id="search">
                 </form>
             </div>
 
@@ -90,7 +90,7 @@
                     <div class="desc-triangle"></div>
                 </div>
             </div>
-
+            <div class="filter-buttons"></div>
         </div>
     </div>
 
@@ -203,9 +203,9 @@
         <div class="not-found-message">
             <%if(isSearch) {%>
                 <span>Нічого не знайдено...</span>
-            <%} else {%>
-                <span>Ваша галерея пуста, але ви можете <a href="./upload.html">завантажити фото</a></span>
-            <%}%>
+                <%} else {%>
+                    <span>Ваша галерея пуста, але ви можете <a href="./upload.html">завантажити фото</a></span>
+                    <%}%>
         </div>
     </script>
 </body>

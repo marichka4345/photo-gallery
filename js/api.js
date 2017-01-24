@@ -210,7 +210,7 @@ var api = (function() {
             localStorage.users = JSON.stringify(actualUsers);
         } catch (e) {
             if (isQuotaExceeded(e)) {
-                onFailure("Unable to save the information! Storage limit exceeded!");
+                onFailure("Неможливо зберегти!");
             }
         }
     }
@@ -239,21 +239,27 @@ var api = (function() {
 
     /**************Photos load/get*******************/
     function loadPhoto(userToken, photo, additional, onSuccess, onFailure) {
-        var isImage = ~photo.type.indexOf('image');
-        if (isImage) {
+        if (typeof photo === 'string') {
+            addPhoto(userToken, photo, additional);
+            return onSuccess("Успішно завантажено!");
+        }
+        if (~photo.type.indexOf('image')) {
             var reader = new FileReader();
             reader.addEventListener('load', function() {
-                var data = reader.result,
-                    userIndex = findIndexByLogin(userToken);
-                actualUsers[userIndex].photos.push(generatePhotoObj(data, additional));
-                onSuccess("The photo was successfully loaded!");
-                //onSuccess(actualUsers[userIndex].photos);
+                var data = reader.result;
+                addPhoto(userToken, data, additional);
+                onSuccess("Успішно завантажено!");
             });
             reader.readAsDataURL(photo);
 
         } else {
-            onFailure("The wrong file format! Please choose an image!");
+            onFailure("Виберіть зображення!");
         }
+    }
+
+    function addPhoto(userToken, data, additional) {
+        var userIndex = findIndexByLogin(userToken);
+        actualUsers[userIndex].photos.push(generatePhotoObj(data, additional));
     }
 
     function generatePhotoObj(data, additional) {
@@ -268,7 +274,6 @@ var api = (function() {
     }
 
     function findIndexByLogin(login) {
-        console.log(actualUsers);
         for (var i = 0; i < actualUsers.length; i++) {
             if (actualUsers[i].login === login) return i;
         }
@@ -286,17 +291,14 @@ var api = (function() {
     }
 
     function getAllPhotos(userToken) {
-        //var photos = {};
         var photos = [];
         var userPhotos = [];
         actualUsers.forEach(function(user, index) {
             if (user.login === userToken) return;
             userPhotos = getUserPhotos(index);
-            //console.log(userPhotos, "usersP");
             userPhotos.forEach(function(photo) {
                 photos.push([user.login, photo]);
             });
-            //photos[user.login] = getUserPhotos(index);
         });
         return photos;
     }
@@ -345,7 +347,6 @@ var api = (function() {
 
     /**************Users login/register*******************/
     function registerUser(userObj, onSuccess, onFailure) {
-        console.log(findIndexByLogin(userObj.login));
         if (findIndexByLogin(userObj.login) === null) {
             actualUsers.push({
                 login: userObj.login,
@@ -353,19 +354,19 @@ var api = (function() {
                 photos: []
             });
             localStorage.userToken = userObj.login;
-            onSuccess("The user was successfully created");
+            onSuccess("Користувач був створений");
         } else {
-            onFailure("The user with this login already exists!");
+            onFailure("Користувач з таким іменем уже існує!");
         }
     }
 
     function loginUser(userObj, onSuccess, onFailure) {
         var userIndex = findIndexByLogin(userObj.login);
         if (userIndex === null || actualUsers[userIndex].password !== userObj.password) {
-            onFailure("Wrong login or password!");
+            onFailure("Невірний логін або пароль!");
         } else {
             localStorage.userToken = userObj.login;
-            onSuccess("You have successfully logged in");
+            onSuccess("Ви успішно увійшли");
         }
     }
 
@@ -395,7 +396,7 @@ var api = (function() {
         } else if (sortCriteria === 'date') {
 
             allPhotos.sort(function(a, b) {
-                return new Date(a[1].createdDate) - new Date(b[1].createdDate);
+                return Date.fromISO(a[1].createdDate) - Date.fromISO(b[1].createdDate);
             });
         }
         if (direction === 'desc') allPhotos.reverse();

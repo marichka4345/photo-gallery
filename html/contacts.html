@@ -5,17 +5,19 @@
     <title>Contacts</title>
     <meta charset="utf-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/fonts/font1/flaticon.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/contacts.css">
 
     <!--[if lt IE 9]>
+    <link rel="stylesheet" href="../styles/ie8-styles.css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
-     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="../js/polyfills.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/contacts.js"></script>
+
 </head>
 
 <body>
@@ -41,8 +43,8 @@
                         <a href="#">Фото</a>
                         <div class="sub-menu-triangle"></div>
                         <ul class="sub-menu">
-                            <li class="sub-menu-item">Найпопулярніше</li>
-                            <li class="sub-menu-item">Завантажити нове</li>
+                            <li class="sub-menu-item"><a href="./registration.html">Найпопулярніше</a></li>
+                            <li class="sub-menu-item"><a href="./registration.html">Завантажити нове</a></li>
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -52,8 +54,12 @@
             </nav>
 
             <div class="login-container">
-                <a href="./registration.html"><button class="inline-btn login-btn">Реєстрація</button></a>
-                <a href="./login.html"><button class="inline-btn login-btn">Вхід</button></a>
+                <a href="./registration.html">
+                    <div class="inline-btn login-btn">Реєстрація</div>
+                </a>
+                <a href="./login.html">
+                    <div class="inline-btn login-btn">Вхід</div>
+                </a>
             </div>
 
         </div>

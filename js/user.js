@@ -13,7 +13,7 @@ $(function() {
 /*********************Check css3 columns***********************************/
 function setupJSColumnsIfNeeded() {
     var div = $('<div style="-webkit-column-count: 3; -moz-column-count: 3; column-count: 3;" />');
-    if(!div.css('column-count') && !div.css('-webkit-column-count') && !div.css('-moz-column-count')) {
+    if (!div.css('column-count') && !div.css('-webkit-column-count') && !div.css('-moz-column-count')) {
         $('.content').columnize({ columns: 4, width: 300 });
     };
 }
@@ -70,18 +70,32 @@ function gotoPopular() {
 
 /**************Like photo*************************/
 function changeLikesCount() {
-    $('div.photo-likes>*').click(likeHandler);
+    $('.content').on('click', '.heart', likeHandler);
 
-    function likeHandler(event) {
-        event.stopPropagation();
-        var photoSrc = $(this).parent().parent().siblings('.img-container').find('img').attr('src');
-        var author = $(this).parent().parent().prev().find('span').text();
-        var clickHandler = (function(likes) {
-            $(this).parent('.photo-likes').find('span').html(likes);
-        }).bind($(this));
+    function likeHandler(e) {
+        //e.stopPropagation();
+        var target = $(e.target);
+        var photoSrc = target.parent().parent().siblings('.img-container').find('img').attr('src');
+        var author = target.parent().parent().prev().find('span').text();
+        var clickHandler = function(likes) {
+            target.parent('.photo-likes').find('span').html(likes);
+        };
 
         api.likePhoto(localStorage.userToken, author, photoSrc, clickHandler);
     }
+}
+
+function handleLike(likeButton, author, photoSrc) {
+    likeButton.click(function() {
+        api.likePhoto(localStorage.userToken, author, photoSrc, function(likes) {
+            likeButton.children('span').text(likes);
+            $('.content .image').filter(function() {
+                return $(this).find('.img-container img').attr('src') === photoSrc;
+            }).each(function() {
+                $(this).find('.photo-likes span').text(likes);
+            });
+        });
+    });
 }
 /*********************************************/
 
@@ -128,14 +142,28 @@ function manageSorting(found, templateName) {
 
 /**************Filtering*************************/
 function requestFilter() {
-    $('.tag-container span').click(function() {
+    $('.tag span').click(function() {
         $('.active-choice').removeClass('active-choice');
         $('.arrow-active').removeClass('arrow-active');
-        var tag = $(this).text().slice(1);
+        var tag = $(this).text();
         $('.modal').removeClass('visible');
-        var found = api.filterByTag(tag, definePagination, console.log);
+        var found = api.filterByTag(tag.slice(1), definePagination, console.log);
+        addCloseFilterButton(tag);
         setSortingData(found);
     });
+}
+
+function addCloseFilterButton(tag) {
+    var button = $('<div>').addClass('tag-container');
+    button.append($('<span>').text(tag));
+    button.append($('<div>').addClass('cross'));
+
+    button.children('.cross').on('click', function() {
+        $(this).parent().remove();
+        definePagination();
+    });
+
+    $('.sort-wrapper .filter-buttons').empty().append(button);
 }
 /*********************************************/
 
@@ -149,7 +177,7 @@ function showFullSizeImg(infoArr) {
         $('.modal-content').attr('src', photoSrc);
         $('.photo-info').css('margin-top', parseFloat($('.photo-info').innerHeight()) / -2 + 'px');
 
-        var infoObj = infoArr.filter(function(photo) { return photo.src === photoSrc; });
+        var infoObj = _.filter(infoArr, function(photo) { return photo.src === photoSrc; });
         if (infoObj.length != 0) {
             infoObj = infoObj[0];
             $('.photo-info .author').text(infoObj.author);
@@ -158,8 +186,9 @@ function showFullSizeImg(infoArr) {
             $('.photo-info p.description').text(infoObj.description);
             $('.photo-info .tags').empty();
             infoObj.tags.forEach(function(tag) {
-                $('.photo-info .tags').append('<div class="tag-container"><span>#' + tag + '</span></div>');
+                $('.photo-info .tags').append('<div class="tag"><span>#' + tag + '</span></div>');
             });
+            handleLike($('.like-photo').off('click'), infoObj.author, photoSrc);
             requestFilter();
         }
     });
@@ -174,7 +203,7 @@ function showImages(imgs, templateName) {
         isSearch = templateName === 'found-photos';
     templateName = templateName || 'user-photos';
     imgs.forEach(function(p) {
-        var date = new Date(p[1].createdDate),
+        var date = Date.fromISO(p[1].createdDate),
             dateStr = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear(),
             author = p[0],
             photoSrc = p[1].photo,
@@ -200,6 +229,7 @@ function showImages(imgs, templateName) {
         messageWrapper.empty();
         messageWrapper.append(tmpl({ isSearch: isSearch }));
     } else {
+        $('.content').off('click');
         sortWrapper.addClass('visible');
         messageWrapper.empty();
         showFullSizeImg(data.photos);
@@ -208,7 +238,7 @@ function showImages(imgs, templateName) {
 }
 
 function definePagination(sortedData, templateName) {
-    var photoCount = 4;
+    var photoCount = 8;
     var pagesContainer = $('.pages-container');
     var pagesCount = Math.ceil((sortedData || api.getAllPhotos(localStorage.userToken)).length / photoCount);
     $('.content').empty();
@@ -229,7 +259,7 @@ function definePagination(sortedData, templateName) {
 
     $('.page-item .page-link:contains(1)').addClass('active');
     stylePagination();
-    if(sortedData === undefined) {
+    if (sortedData === undefined) {
         api.getNextPage(1, photoCount, function(images) { showImages(images, templateName); });
     } else {
         showImages(sortedData.slice(0, photoCount), templateName);
@@ -280,7 +310,6 @@ function movePagination(photoCount, pagesCount, pagesContainer, sortedData, temp
                         navClickHandler();
 
                     }
-                    console.log(activePage);
                     showContent(activePage + 1);
                 }
             } else if (activePage > 1) {
@@ -295,7 +324,6 @@ function movePagination(photoCount, pagesCount, pagesContainer, sortedData, temp
                     linkClickHandler();
                     navClickHandler();
                 }
-                console.log(activePage);
                 showContent(activePage - 1);
             }
         });
@@ -307,7 +335,7 @@ function movePagination(photoCount, pagesCount, pagesContainer, sortedData, temp
             $('.page-link').removeClass('active');
             $('.page-item a:contains("' + pageNumber + '")').addClass('active');
         }
-        if(sortedData === undefined) {
+        if (sortedData === undefined) {
             api.getNextPage(pageNumber, photoCount, function(photos) { showImages(photos, templateName); });
         } else {
             var offset = (pageNumber - 1) * photoCount;
@@ -328,13 +356,14 @@ function movePagination(photoCount, pagesCount, pagesContainer, sortedData, temp
 function manageSearch() {
     $('.search').val('');
 
+
     function onHover() {
         $('.search-icon').addClass('active-icon');
         $('.search').addClass('active-search').on('keyup', removeHover);
     }
 
     function removeHover() {
-        if (!($('.search').val().length || $('.site-search').is(':hover'))) {
+        if (!($('.search').val().length || $('.site-search:hover').length)) {
             $('.search-icon').removeClass('active-icon');
             $('.search').removeClass('active-search');
             $('.search-error').remove();

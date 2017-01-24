@@ -5,178 +5,18 @@
     <title>Upload photo</title>
     <meta charset="utf-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/fonts/font1/flaticon.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/login.css">
     <!--[if lt IE 9]>
+    <link rel="stylesheet" href="../styles/ie8-styles.css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="../js/polyfills.js"></script>
-    <script type='text/javascript' src='../js/columnizer.js'></script>
+    <script type="text/javascript" src="../js/fileLoadOld/dist/swfobject/swfobject.js"></script>
     <script src="../js/api.js"></script>
-
-    <script>
-        $(function() {
-            $('#upld-tags').on('keydown', function(e) {
-                var value = $(this).val();
-                if (e.keyCode === 13 && value) {
-                    $('.tags').append('<div class="tag-container"><span>' + value + '</span><div class="cross"></div></div>');
-                    handleContainerClose();
-                    $(this).val('');
-                }
-            });
-
-            function handleContainerClose() {
-                $('.tag-container .cross').click(function() {
-                    $(this).parent().remove();
-                });
-            }
-            $('#upld-form').on('keydown', function(e) {
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                }
-            });
-            $('#upld-form').submit(validateForm);
-
-            function validateForm(event) {
-
-                var file = document.querySelector('.file-input').files[0];
-                var title = $('#upld-title').val(),
-                    description = $('#upld-description').val(),
-                    tagsElems = $('.tag-container span'),
-                    tags = [];
-                tagsElems.each(function() {
-                    tags.push($(this).text());
-                });
-                var errorMsg = $('<div class="error"></div>'),
-                    formHeading = $('.rg-heading').eq(0);
-
-                $('.error').remove();
-
-                function formErrorMsg(str) {
-                    errorMsg.append(str);
-                    formHeading.after(errorMsg);
-                    event.preventDefault();
-                    return false;
-                }
-
-                if (!file) {
-                    formErrorMsg("Не завантажено файл!");
-                    return false;
-                }
-                if (!title.trim().length) {
-                    formErrorMsg("Назва не повинна бути пуста");
-                    return false;
-                }
-                if (!description.trim().length) {
-                    formErrorMsg("Опис не повинен бути пустий");
-                    return false;
-                }
-                api.loadPhoto(localStorage.userToken, file, {
-                        "description": description,
-                        "title": title,
-                        "tags": tags
-                    },
-
-                    function(msg) {
-                        console.log(msg);
-                        location = "./user.html";
-                        //api.getUserPhotos(localStorage.userToken);
-                    },
-                    function(msg) {
-                        console.log(msg);
-                    });
-                event.preventDefault();
-            }
-        });
-    </script>
-
-    <style>
-        .tags {
-            margin-bottom: 1em;
-        }
-
-        .tags:after {
-            content: ' ';
-            display: block;
-            clear: both;
-        }
-        
-        .tag-container {
-            float: left;
-            border-radius: 20px;
-            padding: .1% 2%;
-            border: 1px solid #faebd7;
-            margin: 2%;
-        }
-        
-        .cross {
-            width: 13px;
-            height: 10px;
-            position: relative;
-            top: -2px;
-            right: -2px;
-            display: inline-block;
-        }
-        
-        .cross:after,
-        .cross:before {
-            position: absolute;
-            content: " ";
-            background: #fff;
-            height: 10px;
-            width: 3px;
-            cursor: pointer;
-        }
-        
-        .cross:before {
-            -ms-transform: rotate(45deg);
-            transform: rotate(45deg);
-        }
-        
-        .cross:after {
-            -ms-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-        
-        .upld-wrapper {
-            background: #666;
-            opacity: .9;
-        }
-        
-        .file-input {
-            width: .1px;
-            height: .1px;
-            opacity: 0;
-            overflow: hidden;
-            position: absolute;
-            z-index: -1;
-        }
-        
-        .file-input+label {
-            font-weight: bold;
-            color: #fff;
-            border: 1px solid #fff;
-            padding: 2%;
-            display: inline-block;
-            cursor: pointer;
-            margin-top: 10%;
-        }
-        
-        .upld-form .flaticon-cloud-computing:before {
-            margin: 0 10px 0;
-        }
-        
-        .file-input+label:hover,
-        .upld-form [class*="flaticon-"]:hover:before {
-            color: #fff;
-            opacity: .7;
-        }
-    </style>
-
-
+    <script src="../js/upload.js"></script>
 </head>
 
 <body>
@@ -188,36 +28,16 @@
                 <input type="file" class="file-input" id="file-upld">
                 <label for="file-upld" class="flaticon-cloud-computing"><span>Виберіть файл</span></label>
 
-                <input type="text" class="rg-input" id="upld-title" placeholder="Назва">
+                <div class="form-row"><input type="text" class="rg-input" id="upld-title" placeholder="Назва"></div>
 
-                <input type="text" class="rg-input" id="upld-description" placeholder="Короткий опис">
+                <div class="form-row"><input type="text" class="rg-input" id="upld-description" placeholder="Короткий опис"></div>
 
-                <input type="text" class="rg-input" id="upld-tags" placeholder="Теги">
+                <div class="form-row"><input type="text" class="rg-input" id="upld-tags" placeholder="Теги"></div>
                 <div class="tags"></div>
                 <input type="submit" class="rg-submit" value="Завантажити">
             </form>
         </div>
     </div>
-    <script>
-        var inputs = document.querySelectorAll('.file-input');
-        Array.prototype.forEach.call(inputs, function(input) {
-            var label = input.nextElementSibling,
-                labelVal = label.innerHTML;
-
-            input.addEventListener('change', function(e) {
-                var fileName = '';
-                if (this.files && this.files.length > 1)
-                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
-                else
-                    fileName = e.target.value.split('\\').pop();
-
-                if (fileName)
-                    label.querySelector('span').innerHTML = fileName;
-                else
-                    label.innerHTML = labelVal;
-            });
-        });
-    </script>
 </body>
 
 </html>

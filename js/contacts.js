@@ -1,16 +1,16 @@
 $(function() {
-    setTopBlockHeight();
-    
-    setMapTrianglePosition();
     $(window).on('resize', setTopBlockHeight);
+    setTimeout(setTopBlockHeight, 0);
 });
+
 function setTopBlockHeight() {
     var headerHeight = parseFloat($('.main-header').outerHeight()),
-                windowHeight = parseFloat($(window).innerHeight());
+        windowHeight = parseFloat($(window).innerHeight());
     $('.main-header').next().css({
         'paddingTop': headerHeight + 'px',
         'height': windowHeight + 'px'
     });
+    setMapTrianglePosition();
 }
 
 function setMapTrianglePosition() {

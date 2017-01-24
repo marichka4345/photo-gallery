@@ -5,73 +5,17 @@
     <title>Registration</title>
     <meta charset="utf-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Poiret+One" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/login.css">
 
     <!--[if lt IE 9]>
+    <link rel="stylesheet" href="../styles/ie8-styles.css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="../js/polyfills.js"></script>
     <script src="../js/api.js"></script>
-    <script>
-        $(document).ready(function() {
-
-
-            $('#rg-form').submit(
-                validateForm
-            );
-        });
-
-        function validateForm(event) {
-            var email = $('#rg-email').val(),
-                login = $('#rg-login').val(),
-                pass = $('#rg-passwd').val(),
-                conf = $('#rg-confirm').val();
-            var errorMsg = $('<div class="error"></div>'),
-                firstInput = $('.rg-input').eq(0);
-
-            $('.error').remove();
-
-            function formErrorMsg(str) {
-                errorMsg.append(str);
-                firstInput.before(errorMsg);
-                event.preventDefault();
-                return false;
-            }
-            var emailValid = (function validateEmail() {
-                return email.match(/^\w+[\.+]?\w+@\w+\.[a-z]{2,}$/i);
-            })();
-            var loginValid = (function validateLogin() {
-
-                return login.match(/^[a-z]+.+$/i);
-            })();
-            var passwordValid = (function validatePassword() {
-                console.log(pass);
-                return pass.match(/^.{6,}$/)
-            })();
-            if (!loginValid) {
-                formErrorMsg('<p>Логін повинен містити мінімум 2 символи і починатися літерою!</p>');
-                return false;
-            }
-            if (!passwordValid) {
-                formErrorMsg('<p>Пароль повинен містити мінімум 6 символів!</p>');
-                return false;
-            }
-            if (pass !== conf) {
-                formErrorMsg('<p>Пароль і підтвердження не співпадають!</p>');
-                return false;
-            }
-            api.registerUser({
-                login: login,
-                password: pass
-            }, alert, formErrorMsg);
-            console.log(localStorage.userToken);
-            return true;
-
-        }
-    </script>
+    <script src="../js/registration.js"></script>
 </head>
 
 <body>
@@ -81,10 +25,10 @@
             <form class="rg-form" id="rg-form" method="GET" action="./user.html">
                 <a href="./index.html" class="top-logo"><img src="../img/ico/svg/white-logo.svg" width="100" height="100"></a>
                 <p class="rg-heading">Реєстрація</p>
-                <input type="text" class="rg-input" id="rg-login" placeholder="Логін">
-                <input type="email" class="rg-input" id="rg-email" placeholder="Email">
-                <input type="password" class="rg-input" id="rg-passwd" placeholder="Пароль">
-                <input type="password" class="rg-input" id="rg-confirm" placeholder="Підтвердити пароль">
+                <div class="form-row"><input type="text" class="rg-input" id="rg-login" placeholder="Логін"></div>
+                <div class="form-row"><input type="email" class="rg-input" id="rg-email" placeholder="Email"></div>
+                <div class="form-row"><input type="password" class="rg-input" id="rg-passwd" placeholder="Пароль"></div>
+                <div class="form-row"><input type="password" class="rg-input" id="rg-confirm" placeholder="Підтвердити пароль"></div>
                 <input type="submit" class="rg-submit" value="Зареєструватися">
 
                 <div class="login-info">
